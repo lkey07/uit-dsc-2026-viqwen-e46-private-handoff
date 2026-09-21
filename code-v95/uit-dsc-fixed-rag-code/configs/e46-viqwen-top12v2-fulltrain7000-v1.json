@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "E46-viqwen-top12v2-fulltrain7000-v1",
+  "source_e45_config_path": "configs/e45-top12v2-fulltrain7000-v1.json",
+  "source_e19_config_path": "configs/e19-metadata-aware-lora-train5636-eval200-v1.json",
+  "organizer_csv_sha256": "0b1de15db2869990739a4e6dd57186db14b09a5a2607ad834c927d0bab604e95",
+  "model": {
+    "id": "AITeamVN/Vi-Qwen2-3B-RAG",
+    "revision": "eaf427c24d86066a2b35828c499b7db3af321227",
+    "architecture": "Qwen2ForCausalLM",
+    "checkpoint_parameters": 3085938688,
+    "embedding_parameters": 567754752,
+    "adapter_parameter_cap": 50000000,
+    "strict_stack_limit": 4000000000
+  },
+  "training": {
+    "records": 7000,
+    "retrieved_contexts_per_record": 12,
+    "selector": "rrf-top6-then-legal-priority-v2",
+    "maximum_sequence_tokens": 4096,
+    "epochs": 1.0,
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.05,
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    "seed": 20260830,
+    "learning_rate": 0.0001,
+    "per_device_train_batch_size": 1,
+    "gradient_accumulation_steps": 4,
+    "warmup_ratio": 0.03,
+    "lr_scheduler": "cosine",
+    "weight_decay": 0.0,
+    "save_steps": 32,
+    "quantization": "nf4-double-quant-float16",
+    "fresh_from_pinned_checkpoint": true,
+    "official_answers_supervise_generation_only": true,
+    "answer_truncation_allowed": false
+  },
+  "runtime": {
+    "torch": "2.10.0+cu128",
+    "transformers": "5.16.1",
+    "peft": "0.19.1",
+    "accelerate": "1.13.0"
+  },
+  "run_contract": {
+    "e38_adapter_not_loaded": true,
+    "e19_adapter_not_loaded": true,
+    "no_public_or_private_read": true,
+    "no_external_or_synthetic_data": true,
+    "full_official_train_only": true,
+    "resume_fail_closed": true
+  }
+}

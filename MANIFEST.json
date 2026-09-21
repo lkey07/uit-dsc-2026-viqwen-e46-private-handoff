@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "handoff": "E46 Vi-Qwen top12-v2 one-GPU private max1536",
+  "public_repository": true,
+  "private_questions_intentionally_published_by_owner": true,
+  "files": {
+    "assets/E00-v2-dataset.zip": "5ae2b0423d70ce8117950c78278b8ceb978eb02d68a93946914dc485c2a87741",
+    "assets/E45_dataset.zip": "ee494e4befaaedc9d48044fe8a4e423fff18e3a55c2ce385fe555a3fb01be9e5",
+    "assets/E46_dataset.zip": "82a7c3f39e4e1486dc4aa3fc1c419c578183bc3c025c4b47cf711705f1537b79",
+    "assets/P00_dataset.zip": "fe8373c02cf315aa0d6a29ea5cca70cda726db75da01e6359e9828806d5260bf",
+    "private-official.json": "d84bce10a1aa1c939552b2d86d0f8cb7b66d2d6ed20266e3c2b80f3498b3d427",
+    "kaggle-upload-v95-final-private-p05-e46.zip": "c9fa44db204e3343210031ab5ba5422c19f3645285d02d081cd60da2ad4ff36c"
+  },
+  "archive_roots": {
+    "assets/E00-v2-dataset.zip": "e00-v2",
+    "assets/E45_dataset.zip": "e45-top12v2-fulltrain7000-v1",
+    "assets/E46_dataset.zip": "e46-viqwen-top12v2-fulltrain7000-v1",
+    "assets/P00_dataset.zip": "final-private-p00-retrieval-parent-v1"
+  },
+  "base_model": {
+    "id": "AITeamVN/Vi-Qwen2-3B-RAG",
+    "revision": "eaf427c24d86066a2b35828c499b7db3af321227"
+  },
+  "private_questions": 1918,
+  "submission_created_by_clone": false
+}

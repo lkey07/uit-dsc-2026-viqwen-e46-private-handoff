@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "FINAL-private-p05-e46-top12v2-max1536-unified-v1",
+  "source_e46_config_path": "configs/e46-viqwen-top12v2-fulltrain7000-v1.json",
+  "source_p00_experiment": "FINAL-private-p00-retrieval-parent-v1",
+  "sample_size": 1918,
+  "inference": {
+    "device": "cuda:0",
+    "precision": "float16",
+    "max_input_tokens": 8192,
+    "max_new_tokens": 1536,
+    "do_sample": false,
+    "num_beams": 1,
+    "repetition_penalty": 1.0,
+    "no_repeat_ngram_size": 0
+  },
+  "selector": "rrf-top6-then-legal-priority-v2",
+  "postprocess": "E43-then-E44-unified-suffix-only",
+  "checkpoint_after_questions": 1,
+  "private_reference_answers_read": false,
+  "reranker": null
+}

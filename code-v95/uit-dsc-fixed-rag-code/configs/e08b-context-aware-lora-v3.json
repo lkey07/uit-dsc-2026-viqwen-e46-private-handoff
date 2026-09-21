@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "E08B-context-aware-lora-train5636-dev521-v3",
+  "source_e08a": {
+    "experiment_id": "E08A-context-retrieval-train5636-dev521-v1",
+    "report_sha256": "37404e8c2acc689a86871bc9c8c6165a94a9d8b0942ee09b3351461d3b8ecaea",
+    "config_sha256": "a13103c6a7ad7432792c658f7a1242aa8e1187ab5a251c7dde6101dc9ff644f7",
+    "train_results_path": "retrieval/train5636/results.jsonl",
+    "train_results_bytes": 123142591,
+    "train_results_sha256": "8bb590020510bc512dbcf738165480cd164059826849a001d117c2374e8e0786",
+    "train_sparse_results_sha256": "170fc816926cdd55b3e0bce5666febf18be19102ab8679a9269b31a0790ba9e6",
+    "dev_results_path": "retrieval/dev521/results.jsonl",
+    "dev_results_bytes": 11421025,
+    "dev_results_sha256": "69dbd80c6f070764717edd386c0ac6a8cc6ec22e3f940ce0008fc9367699defe",
+    "dev_sparse_results_sha256": "93ce7ee52f327f16340f43e2c3b877c6036073f3e75375eace4c8830f0c141ca",
+    "candidate_k_per_branch": 40,
+    "sparse_weight": 0.5,
+    "dense_weight": 0.5,
+    "fused_top_k": 20,
+    "selected_contexts": 12,
+    "reranker": null
+  },
+  "train": {
+    "path": "artifacts/splits/v1/train.json",
+    "sha256": "53db63c15f779babe99c3fcfcf4f4ecf864a7eb0e738637b9e717e1fe357d921",
+    "record_count": 5636,
+    "sample_seed": "uit-dsc-2026-e07-fulltrain-v2",
+    "sample_size": 5636,
+    "sample_ids_sha256": "fee946ada7cbfca7df04ffe1c3d9f06907808c0dc59600e6f1f8d579076742dd",
+    "supervision": "official-answer-only",
+    "input": "question-plus-frozen-ranked-top12-context-candidates",
+    "context_packing": "ordered-whole-chunks-greedy-with-answer-reservation",
+    "context_candidate_limit": 12,
+    "minimum_contexts": 1,
+    "maximum_sequence_tokens": 3072,
+    "context_tail_truncation_fallback": "first-ranked-context-maximal-character-prefix",
+    "minimum_truncated_context_characters": 1,
+    "answer_truncation_allowed": false,
+    "assistant_loss_only": true
+  },
+  "dev": {
+    "path": "artifacts/splits/v1/dev.json",
+    "sha256": "2209b5e066ee354aae00f3b2b1aa69dbf71097c2ccd354f18b2f60daab128dcb",
+    "full_size": 721,
+    "sample_seed": "uit-dsc-2026-fixed-rag-e01-dev200-v1",
+    "excluded_prefix_size": 200,
+    "evaluation_size": 521,
+    "evaluation_ids_sha256": "95b387a23455f673ad274c0ded4883363a309e1f91f7dd13dcb4c025fa8157cc",
+    "answer_usage": "scoring-only",
+    "control_generation": "skipped-by-operator-decision"
+  },
+  "prompt": {
+    "system_prompt": "Bạn là trợ lý pháp luật Việt Nam. Chỉ trả lời dựa trên các tài liệu được cung cấp. Không bịa thông tin hoặc viện dẫn không có trong tài liệu. Nếu tài liệu không đủ, hãy nói rõ là không đủ căn cứ.",
+    "answer_instruction": "Hãy trả lời trực tiếp câu hỏi bằng tiếng Việt, nêu căn cứ pháp lý và các điều kiện hoặc mốc thời gian quan trọng nếu tài liệu có đề cập. Không nhắc đến mã tài liệu nội bộ."
+  },
+  "generator": {
+    "model_id": "Qwen/Qwen3.5-2B",
+    "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+    "published_parameter_count": 2274069824,
+    "runtime_unique_parameter_count": 2213241664
+  },
+  "lora": {
+    "initialization": "fresh-from-pinned-base-not-e07-adapter",
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "in_proj_qkv",
+      "in_proj_z",
+      "in_proj_b",
+      "in_proj_a",
+      "out_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "trainable_parameter_cap": 50000000,
+    "quantization": "nf4-double-quant",
+    "compute_dtype": "float16"
+  },
+  "optimization": {
+    "epochs": 1.0,
+    "learning_rate": 0.0001,
+    "per_device_batch_size": 1,
+    "gradient_accumulation_steps": 4,
+    "effective_global_batch_size": 8,
+    "warmup_steps": 0.03,
+    "lr_scheduler": "cosine",
+    "weight_decay": 0.0,
+    "gradient_checkpointing": true,
+    "save_steps": 32,
+    "seed": 20260830
+  },
+  "inference": {
+    "max_input_tokens": 8192,
+    "minimum_contexts": 1,
+    "max_new_tokens": 384,
+    "do_sample": false,
+    "num_beams": 1,
+    "enable_thinking": false,
+    "use_cache": true
+  },
+  "parameter_budget": {
+    "exclusive_limit": 4000000000,
+    "embedding": 567754752,
+    "generator": 2274069824,
+    "adapter_parameter_cap": 50000000,
+    "maximum_stack_total": 2891824576
+  },
+  "execution": {
+    "training_workers": 2,
+    "evaluation_workers": 2,
+    "partition": "sample-index-mod-worker-count",
+    "checkpoint_after_questions": 1
+  },
+  "scoring": {
+    "primary_metric": "meteor",
+    "secondary_metric": "rouge_l",
+    "official_scorer_path": "src/uit_dsc_fixed_rag/evaluation/official.py",
+    "official_scorer_sha256": "5ad785fb19d0b4b02bad1030c8360e42c5c409d5090905d233b6787905c6d689",
+    "bootstrap_seed": "uit-dsc-2026-e08b-context-aware-dev521-v1",
+    "bootstrap_iterations": 10000,
+    "promotion_allowed": false
+  },
+  "run_contract": {
+    "e08a_retrieval_frozen": true,
+    "train_answers_are_generator_supervision_not_retrieval_labels": true,
+    "dev_answers_scoring_only": true,
+    "dev200_excluded": true,
+    "holdout_untouched": true,
+    "public_not_read": true,
+    "fresh_lora_from_base": true,
+    "no_external_or_synthetic_data": true,
+    "no_api_model": true,
+    "fixed_non_agentic_rag": true,
+    "checkpoint_after_each_question_id": true,
+    "resume_fail_closed": true,
+    "only_new_adapter_evaluated_on_dev521": true
+  }
+}

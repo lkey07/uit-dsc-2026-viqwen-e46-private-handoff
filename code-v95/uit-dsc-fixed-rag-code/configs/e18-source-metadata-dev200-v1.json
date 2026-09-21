@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "E18-e08b-source-metadata-fresh-dev200-max704-v1",
+  "source_contract_path": "configs/e17-citation-lexical-rerank-dev200-v1.json",
+  "source_contract_sha256": "b2a846a383ae90da98424e96fccd9ca4b00c4d79d9b44ff57e0895b14d7865c4",
+  "metadata_source": {
+    "artifact_version": "e00-v2",
+    "manifest_sha256": "04efd3905ad6d2758461587ca68d7d70fa2c568855b78f0c762c7a37ba547b2e",
+    "chunks_sha256": "1e48c7762765ac2dd169045e9f5327c5311db3f1da8a6007ef70fff58718e367",
+    "documents_sha256": "f2968724e8a25124034b9ff2144427f8853ed37359443bd149ec3832f4c1fed7"
+  },
+  "variants": ["ranked_top12_control", "source_metadata_top12"],
+  "metadata_policy": "exact-source-title-and-article-title-plus-unambiguous-header-So-number-v1",
+  "context_count": 12,
+  "max_input_tokens": 8192,
+  "max_new_tokens": 704,
+  "sample_size": 200,
+  "overflow_policy": "fail-before-generation-never-drop-contexts",
+  "primary_metric": "meteor",
+  "promotion_allowed": false
+}

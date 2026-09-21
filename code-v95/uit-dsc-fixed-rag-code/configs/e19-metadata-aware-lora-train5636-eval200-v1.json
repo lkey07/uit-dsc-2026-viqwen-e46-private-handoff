@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "E19-metadata-aware-lora-train5636-eval200-v1",
+  "base_training_config_path": "configs/e08b-context-aware-lora-v3.json",
+  "base_training_config_sha256": "97ee3c5bb0871cd22687d225eb69730dee6cc296a9c3b812e532cd1fd146f5db",
+  "source_e18_config_path": "configs/e18-source-metadata-dev200-v1.json",
+  "source_e18_config_sha256": "d5fea1a7fffddd75f3a345e3f8ad6fbb1a1ddf376d29436550a1d752b800ddf8",
+  "metadata_source": {
+    "artifact_version": "e00-v2",
+    "manifest_sha256": "04efd3905ad6d2758461587ca68d7d70fa2c568855b78f0c762c7a37ba547b2e",
+    "chunks_sha256": "1e48c7762765ac2dd169045e9f5327c5311db3f1da8a6007ef70fff58718e367",
+    "documents_sha256": "f2968724e8a25124034b9ff2144427f8853ed37359443bd149ec3832f4c1fed7",
+    "policy": "exact-source-title-and-article-title-plus-unambiguous-header-So-number-v1"
+  },
+  "training": {
+    "sample_size": 5636,
+    "supervision": "official-answer-only",
+    "input": "question-plus-frozen-ranked-top12-contexts-with-e00-source-metadata",
+    "maximum_sequence_tokens": 3072,
+    "epochs": 1.0,
+    "fresh_from_base": true,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "same_seed_and_optimization_as_e08b": true
+  },
+  "control_source": {
+    "experiment_id": "E08B-context-aware-lora-train5636-dev521-v3",
+    "training_config_sha256": "97ee3c5bb0871cd22687d225eb69730dee6cc296a9c3b812e532cd1fd146f5db",
+    "adapter_sha256": "14316bdb1a999e67c9baae90620c785977856e68cd540d46dbc57f1b2176499d",
+    "fresh_from_base": true,
+    "lora_rank": 8,
+    "lora_alpha": 16
+  },
+  "evaluation": {
+    "dev521_offset": 200,
+    "sample_size": 200,
+    "sample_ids_sha256": "dc17d6c9af9e941868c03cfc61fd17cdd1dc55aa5834beb3e75ba0fde32a5c73",
+    "control_variant": "e08b_rank8_metadata_max704",
+    "candidate_variant": "e19_metadata_trained_rank8_max704",
+    "context_count": 12,
+    "max_input_tokens": 8192,
+    "max_new_tokens": 704,
+    "workers": 2,
+    "questions_per_worker": 200,
+    "promotion_allowed": false
+  },
+  "run_contract": {
+    "train_answers_are_generator_supervision_not_retrieval_labels": true,
+    "dev_answers_scoring_only": true,
+    "evaluation_questions_exclude_old_dev200_and_e18_dev200": true,
+    "same_metadata_contexts_for_control_and_candidate": true,
+    "same_prompt_and_max704_decoding_for_control_and_candidate": true,
+    "no_external_or_synthetic_data": true,
+    "no_api_model": true,
+    "fixed_non_agentic_rag": true,
+    "holdout_untouched": true,
+    "public_not_read": true,
+    "checkpoint_after_each_question_id": true,
+    "resume_fail_closed": true
+  }
+}

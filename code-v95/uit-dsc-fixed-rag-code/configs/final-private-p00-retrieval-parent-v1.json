@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "FINAL-private-p00-retrieval-parent-v1",
+  "source_e00": {
+    "artifact_version": "e00-v2",
+    "manifest_sha256": "04efd3905ad6d2758461587ca68d7d70fa2c568855b78f0c762c7a37ba547b2e",
+    "bm25_bytes": 2551095296,
+    "bm25_sha256": "f874a9528433f0db64efe7b3e951028d89433cbfb4c6e951a182b531acf1e0f0"
+  },
+  "metadata_source": {
+    "chunks_path": "chunks.jsonl",
+    "documents_path": "documents.jsonl",
+    "chunks_sha256": "1e48c7762765ac2dd169045e9f5327c5311db3f1da8a6007ef70fff58718e367",
+    "documents_sha256": "f2968724e8a25124034b9ff2144427f8853ed37359443bd149ec3832f4c1fed7"
+  },
+  "source_dense": {
+    "candidate": "embedding_aiteam",
+    "model_id": "AITeamVN/Vietnamese_Embedding",
+    "revision": "dea33aa1ab339f38d66ae0a40e6c40e0a9249568",
+    "parameter_count": 567754752,
+    "dimension": 1024,
+    "record_count": 457340,
+    "dense_faiss_sha256": "96ab6b8afcb376e327116642e0ffc378d633d9f712b698afd0e43dcee654a633",
+    "chunk_ids_sha256": "6e26962a0963f50460ada74707db31e604dfe4991e7d7150afeec89aa363fb99",
+    "query_prefix": ""
+  },
+  "retrieval": {
+    "candidate_k_per_branch": 40,
+    "rrf_constant": 60,
+    "sparse_weight": 0.5,
+    "dense_weight": 0.5,
+    "fused_top_k": 20,
+    "selected_contexts": 12,
+    "normalize_query_embeddings": true,
+    "dense_search_backend": "torch-cuda-exact-flat-ip-float32-batched",
+    "reranker": null
+  },
+  "context_policy": {
+    "seed_contexts": 12,
+    "max_input_tokens": 8192,
+    "max_parent_tokens": 1200,
+    "max_parent_characters": 6000,
+    "neighbor_radius": 1,
+    "expansion_order": [
+      "whole_article",
+      "both_neighbors",
+      "previous_neighbor",
+      "next_neighbor"
+    ],
+    "evict_seed_for_expansion": false,
+    "merge": "overlapping-or-touching-exact-document-spans",
+    "metadata": "one-source-header-per-document-article-label-per-span"
+  },
+  "execution": {
+    "sparse_worker_threads": 4,
+    "dense_query_batch_size": 32,
+    "dense_devices": [
+      "cuda:0",
+      "cuda:1"
+    ],
+    "dense_worker_count": 2,
+    "partition": "sample-index-mod-worker-count",
+    "checkpoint_after_questions": 1
+  },
+  "parameter_budget": {
+    "exclusive_limit": 4000000000,
+    "embedding": 567754752,
+    "downstream_generator": 3085938688,
+    "adapter_parameter_cap": 50000000,
+    "maximum_stack_total": 3703693440
+  },
+  "run_contract": {
+    "private_answers_never_read": true,
+    "retrieval_frozen_from_public_best": true,
+    "no_reranker": true,
+    "no_external_or_synthetic_data": true,
+    "no_api_model": true,
+    "fixed_non_agentic_rag": true,
+    "checkpoint_after_each_question_id": true,
+    "resume_fail_closed": true,
+    "one_shared_retrieval_artifact_for_all_candidates": true
+  }
+}
