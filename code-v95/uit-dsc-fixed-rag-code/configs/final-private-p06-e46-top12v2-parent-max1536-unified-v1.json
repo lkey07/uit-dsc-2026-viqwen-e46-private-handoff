@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "FINAL-private-p06-e46-top12v2-parent-max1536-unified-v1",
+  "source_p05_config_path": "configs/final-private-p05-e46-top12v2-max1536-unified-v1.json",
+  "source_p00_config_path": "configs/final-private-p00-retrieval-parent-v1.json",
+  "selector": "rrf-top6-then-legal-priority-v2",
+  "parent_policy": "E21-bounded-same-article-over-E45-top12v2-seeds",
+  "max_input_tokens": 8192,
+  "max_new_tokens": 1536,
+  "single_gpu_fp16": true,
+  "seed_overflow_fallback": "P05-top12v2-no-parent",
+  "postprocess": "E43-then-E44-unified-suffix-only",
+  "private_reference_answers_read": false,
+  "reranker": null
+}

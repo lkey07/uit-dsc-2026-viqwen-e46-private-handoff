@@ -28,6 +28,7 @@ WANTED = {
     ),
     "assets/P00_dataset.zip": (
         "report.json", "identity.json", "retrieval/candidate-pool-top20.jsonl",
+        "prepared/results.jsonl",
     ),
 }
 
@@ -43,13 +44,21 @@ def sha_file(path: Path) -> str:
 def main() -> None:
     audit_assets()
     manifest = json.loads((ROOT / "MANIFEST.json").read_text(encoding="utf-8"))
-    # The uncompressed E00 metadata is large; fail before beginning extraction.
+    # Check only files still missing; a prior P05 extraction is expected here.
     required_bytes = 0
     for relative, members in WANTED.items():
         prefix = manifest["archive_roots"][relative] + "/"
+        destination_root = INPUTS / manifest["archive_roots"][relative]
         with ZipFile(ROOT / relative) as archive:
-            required_bytes += sum(archive.getinfo(prefix + name).file_size for name in members)
-    if shutil.disk_usage(ROOT).free < required_bytes + 512 * 1024 * 1024 and not INPUTS.exists():
+            for name in members:
+                expected_size = archive.getinfo(prefix + name).file_size
+                destination = destination_root / name
+                if destination.is_file():
+                    if destination.stat().st_size != expected_size:
+                        raise RuntimeError(f"Existing extracted file differs: {destination}")
+                else:
+                    required_bytes += expected_size
+    if shutil.disk_usage(ROOT).free < required_bytes + 512 * 1024 * 1024:
         raise RuntimeError(f"Need about {required_bytes / 2**30:.1f} GiB plus 0.5 GiB free to extract inputs")
     for relative, members in WANTED.items():
         prefix = manifest["archive_roots"][relative] + "/"

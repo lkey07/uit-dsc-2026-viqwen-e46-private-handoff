@@ -74,6 +74,41 @@ inputs as datasets; the notebook discovers them by experiment ID and hash.
 Use one visible CUDA GPU. `scripts/prepare_assets.py` can create the minimal
 extracted directories before packaging those inputs.
 
+## Separate E46 + parent variant (P06)
+
+The original P05 command above is unchanged. P06 is an **additional**,
+unscored candidate that keeps E45's exact top12-v2 seed selection and adds the
+bounded same-article E21/P00 parent expansion around those selected seeds.
+P00's existing prepared parent rows belong to its older RRF top-12; P06
+therefore rebuilds parent spans for the top12-v2 seeds from the same pinned
+E00 documents. It does **not** retrieve again, change the E46 adapter, or
+read private reference answers. It audits all 7,000 saved E45 selections before
+preparing the private prompts.
+
+After `git pull`, run `python scripts/prepare_assets.py` again. This extracts
+P00's pinned `prepared/results.jsonl` needed to verify its parent policy; all
+previously extracted files are reused. Then, in the same isolated runtime:
+
+```bash
+python scripts/audit_parent_plan.py
+python scripts/run_parent.py --gpu 0
+```
+
+The first command audits parent-source availability for every private QID
+directly in the existing ZIPs; it needs no model or GPU. It reports available
+parent spans, not the number that will fit the Vi-Qwen token budget.
+
+The separate output is
+`output/final-private-p06-e46-top12v2-parent-max1536-unified-v1/submission.zip`.
+P06 uses one FP16 GPU, greedy max1536 and the same E43+E44 Unified Clean. It
+keeps all 12 top12-v2 seeds when they fit the 8,192-token prompt; if the compact
+parent formatting alone makes that impossible, that QID falls back explicitly
+to P05's no-parent packing and is counted in the report. The report also counts
+questions that actually received an expansion. Check these counts and the
+answers before considering a submission. **A gain for E38+parent does not prove
+a gain for E46+parent.** No new large dataset or fine-tuning is needed to run
+this inference-only variant.
+
 ## Pipeline and limitations
 
 P00's saved BM25/dense RRF top20 is reused; no retrieval or reranker runs.
